@@ -29,7 +29,9 @@ const deleteAllChildEl = (el) => {
 } 
 }
 
-const displayTodoForm
+const displayTodoForm = () => {
+    
+};
 
 const displayAllTodos = () => {
     let container = document.getElementById("proj-view");

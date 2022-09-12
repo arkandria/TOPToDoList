@@ -1,4 +1,4 @@
-const todoFactory = (title, description, dueDate, priority, notes, id, projectID, status, creationDate) => {
+const todoFactory = (title, description, dueDate, priority, id, projectID, status, creationDate) => {
     const deleteTodo = () => {
         let i = this.id;
         for (let n=0; n<todoAll.length; n++) {
@@ -15,10 +15,10 @@ const todoFactory = (title, description, dueDate, priority, notes, id, projectID
             };
         };
     }
-    return {title, description, dueDate, priority, notes, id, projectID, status, creationDate,addToProject, deleteTodo};
+    return {title, description, dueDate, priority, id, projectID, status, creationDate,addToProject, deleteTodo};
 };
 
-const projectFactory = (title, description, dueDate, priority, notes, todosList, status, id, creationDate) => {
+const projectFactory = (title, description, dueDate, priority, todosList, status, id, creationDate) => {
     const deleteProject = () => {
         let i = this.id;
         for (let n=0; n<projectsArray.length; n++) {
@@ -26,7 +26,7 @@ const projectFactory = (title, description, dueDate, priority, notes, todosList,
                 projectsArray.splice(n,1);
             };
         };
-    return {title, description, dueDate, priority, notes, todosList, status, id, creationDate, deleteProject};
+    return {title, description, dueDate, priority, todosList, status, id, creationDate, deleteProject};
     };
 };
 
@@ -35,21 +35,21 @@ const projectsArray = [];
 const todoCounter=0;
 const projectCounter=0;
 
-const createTodo = (title, description, dueDate, priority, notes, projectID, status) => {
+const createTodo = (title, description, dueDate, priority, projectID, status) => {
     todoCounter++;
     let id = todoCounter;
     let creationDate = new Date();
-    let newTodo = todoFactory(title, description, dueDate, priority, notes, id, projectID, status,creationDate);
+    let newTodo = todoFactory(title, description, dueDate, priority, id, projectID, status,creationDate);
     todoAll.push(newTodo);
 }
 
-const createProject = (title, description, dueDate, priority, notes) => {
+const createProject = (title, description, dueDate, priority) => {
     projectCounter++;
     let id = projectCounter;
     let creationDate = new Date();
     let todosList = [];
     let status = "New";
-    let newProject = projectFactory(title, description, dueDate, priority, notes, id, todosList, status, creationDate);
+    let newProject = projectFactory(title, description, dueDate, priority, id, todosList, status, creationDate);
     projectsArray.push(newProject);
 };
 
