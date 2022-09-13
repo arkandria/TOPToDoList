@@ -1,4 +1,4 @@
 import { format} from 'date-fns'
-import { displayLabel } from './dom'
+import { domHandler } from './dom'
 
-displayLabel();
+domHandler();

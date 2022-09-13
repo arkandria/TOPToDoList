@@ -26,14 +26,15 @@ const projectFactory = (title, description, dueDate, priority, todosList, status
                 projectsArray.splice(n,1);
             };
         };
-    return {title, description, dueDate, priority, todosList, status, id, creationDate, deleteProject};
     };
+    return {title, description, dueDate, priority, todosList, status, id, creationDate, deleteProject};
+    
 };
 
-const todoAll = [];
-const projectsArray = [];
-const todoCounter=0;
-const projectCounter=0;
+let todoAll = [];
+let projectsArray = [];
+let todoCounter=0;
+let projectCounter=0;
 
 const createTodo = (title, description, dueDate, priority, projectID, status) => {
     todoCounter++;
@@ -49,9 +50,16 @@ const createProject = (title, description, dueDate, priority) => {
     let creationDate = new Date();
     let todosList = [];
     let status = "New";
+    
     let newProject = projectFactory(title, description, dueDate, priority, id, todosList, status, creationDate);
+    
     projectsArray.push(newProject);
 };
+
+if (projectsArray===[]){
+    createProject("All tasks", "This is a list of all your tasks", "N/A", "Normal");
+};
+
 
 export {
     todoAll,
