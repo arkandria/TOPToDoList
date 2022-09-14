@@ -36,13 +36,21 @@ let projectsArray = [];
 let todoCounter=0;
 let projectCounter=0;
 
-const createTodo = (title, description, dueDate, priority, projectID, status) => {
+const createTodo = (title, description, dueDate, priority, projectID) => {
     todoCounter++;
     let id = todoCounter;
     let creationDate = new Date();
+    let status = "New";
     let newTodo = todoFactory(title, description, dueDate, priority, id, projectID, status,creationDate);
     todoAll.push(newTodo);
-}
+    projectsArray.forEach(element => {
+       if ((element.id===newTodo.projectID)&&(element.id>1)||element.id===1){
+         element.todosList.push(newTodo.id);
+       } 
+    });
+    console.log(todoAll);
+    console.log(projectsArray)
+};
 
 const createProject = (title, description, dueDate, priority) => {
     projectCounter++;
@@ -56,14 +64,22 @@ const createProject = (title, description, dueDate, priority) => {
     projectsArray.push(newProject);
 };
 
-if (projectsArray===[]){
-    createProject("All tasks", "This is a list of all your tasks", "N/A", "Normal");
-};
+const initialProject =() => {
+    
+    if (projectsArray.length===0){
+        
+        createProject("General view", "This is a list of all your tasks", "N/A", "Normal");
+        
+    };
+    
+}
+
 
 
 export {
-    todoAll,
+    
     projectsArray,
     createProject,
-    createTodo
+    createTodo,
+    initialProject
 };

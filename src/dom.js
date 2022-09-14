@@ -1,4 +1,4 @@
-import { todoAll, projectsArray, createProject} from "./internal";
+import {  projectsArray, createProject, createTodo} from "./internal";
 
 let newProjectButton = document.getElementById("new-project");
 let newTodoButton = document.getElementById("new-todo");
@@ -52,6 +52,7 @@ const closeProjectButton = () => {
 
 const displayTodoForm = () => {
     newTodoButton.addEventListener("click", () => {
+        addProjectSelect();
         todoForm.style.display = "block";
 });
 };
@@ -89,33 +90,70 @@ const createProjectButton = () => {
         let priority = document.getElementById("project-priority-select").value;
         createProject(title, description, dueDate, priority);
         closeProjectForm();
+        projectListDisplay();
         console
     });
     
 };
 
+const addProjectSelect = () => {
+    
+    let selectContainer = document.getElementById("project-dropdown");
+    let select = document.createElement("select");
+    let label = document.createElement("label");
+    label.setAttribute ("for", "project-select");
+    label.textContent = "Choose Project:";
+    select.setAttribute ("id", "project-select");
+    
+    projectsArray.forEach(element => {
+    
+        let projtitle = element.title;
+        let option = document.createElement("option");
+        option.setAttribute("value", element.id);
+        option.textContent = projtitle;
+        select.appendChild(option);
+    });
+    selectContainer.appendChild(label);
+    selectContainer.appendChild(select);
+}
+
 const createTodoButton = () => {
-    let todoButton = document.getElementById("create-todo-button");
+        let todoButton = document.getElementById("create-todo-button");
         todoButton.addEventListener("click", () => {
         let title = document.getElementById("todo-title").value;
         let description = document.getElementById("todo-description").value;
         let dueDate = document.getElementById("todo-dueDate").value;
         let priority = document.getElementById("todo-priority-select").value;
-        createProject(title, description, dueDate, priority);
-        closeProjectForm();
+        let projectID = document.getElementById("project-select").value;
+        createTodo(title, description, dueDate, priority, projectID);
+        closeTodoForm();
         console
     });
     
-};
+}
+
+const projectListDisplay = () => {
+    let listContainer = document.getElementById("project-list-container");
+    projectsArray.forEach(el => {
+        if (el.id>1) {
+            let name = el.title;
+            let entry = document.createElement("div");
+            entry.textContent = name;
+            entry.addEventListener("click", ()=> { alert ("oui")})
+        };
+    });
+}
 
 
 const domHandler = () => {
+    
     displayLabel();
     displayProjectForm();
     displayTodoForm();
     closeProjectButton();
     closeTodoButton();
     createProjectButton();
+    createTodoButton()
 };
 
 
