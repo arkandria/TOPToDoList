@@ -1,4 +1,6 @@
-const todoFactory = (title, description, dueDate, priority, id, projectID, status, creationDate) => {
+import {storeProj, retrieveProj, projCounter} from './storage'
+
+const todoFactory = (title, description, dueDate, priority, id, projectID, status) => {
     const deleteTodo = () => {
         let i = this.id;
         for (let n=0; n<todoAll.length; n++) {
@@ -15,10 +17,10 @@ const todoFactory = (title, description, dueDate, priority, id, projectID, statu
             };
         };
     }
-    return {title, description, dueDate, priority, id, projectID, status, creationDate,addToProject, deleteTodo};
+    return {title, description, dueDate, priority, id, projectID, status,addToProject, deleteTodo};
 };
 
-const projectFactory = (title, description, dueDate, priority, todosList, status, id, creationDate) => {
+const projectFactory = (title, description, dueDate, priority, todosList, status, id) => {
     const deleteProject = () => {
         let i = this.id;
         for (let n=0; n<projectsArray.length; n++) {
@@ -27,21 +29,21 @@ const projectFactory = (title, description, dueDate, priority, todosList, status
             };
         };
     };
-    return {title, description, dueDate, priority, todosList, status, id, creationDate, deleteProject};
+    return {title, description, dueDate, priority, todosList, status, id, deleteProject};
     
 };
 
 let todoAll = [];
 let projectsArray = [];
 let todoCounter=0;
-let projectCounter=0;
+
 
 const createTodo = (title, description, dueDate, priority, projectID) => {
     todoCounter++;
     let id = todoCounter;
-    let creationDate = new Date();
+    
     let status = "New";
-    let newTodo = todoFactory(title, description, dueDate, priority, id, projectID, status,creationDate);
+    let newTodo = todoFactory(title, description, dueDate, priority, id, projectID, status);
     todoAll.push(newTodo);
     projectsArray.forEach(element => {
        if ((element.id===newTodo.projectID)&&(element.id>1)||element.id===1){
@@ -49,35 +51,65 @@ const createTodo = (title, description, dueDate, priority, projectID) => {
        } 
     });
     console.log(todoAll);
-    console.log(projectsArray)
+    console.log(projectsArray);
 };
 
-const createProject = (title, description, dueDate, priority) => {
-    projectCounter++;
-    let id = projectCounter;
-    let creationDate = new Date();
+const createProjectArray = (title, description, dueDate, priority) => {
+    projCounter++;
+    let id = projCounter;
     let todosList = [];
     let status = "New";
+    let array = [title, description, dueDate, priority, id, todosList, status];
+    console.log(array);
+    storeProj(array);
+    console.log(id);
+};
+
+
+const createProject = (title, description, dueDate, priority) => {
     
-    let newProject = projectFactory(title, description, dueDate, priority, id, todosList, status, creationDate);
+    
+
+    
+    let newProject = projectFactory(title, description, dueDate, priority, todosList, status, id);
     
     projectsArray.push(newProject);
+    //storeProjArray();
+    //testProjects();
 };
 
 const initialProject =() => {
     
-    if (projectsArray.length===0){
+    if (projCounter===0){
         
-        createProject("General view", "This is a list of all your tasks", "N/A", "Normal");
+        createProjectArray("General view", "This is a list of all your tasks", "N/A", "Normal");
         
     };
     
 }
+/*
+const storeProjArray= () => {
+    alert("storing!");
+    const myProjectsArr = projectsArray;
+    window.localStorage.setItem('projects', JSON.stringify(myProjectsArr));
+}
 
+const retrieveProjArray= () => {
+    alert("retrieving!");
+    const storedProjArray= JSON.parse(window.localStorage.getItem('projects'));
+    projectsArray = storedProjArray;
+}
+const testProjects= () => {
+    const itemSet = (localStorage.getItem('projects') !== null);
 
+    if (itemSet)  {
+        console.log(localStorage.getItem('projects'));
+    }
+};
+*/
 
 export {
-    
+    createProjectArray,
     projectsArray,
     createProject,
     createTodo,
