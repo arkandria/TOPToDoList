@@ -60,20 +60,26 @@ const createProjectArray = (title, description, dueDate, priority) => {
     let todosList = [];
     let status = "New";
     let array = [title, description, dueDate, priority, id, todosList, status];
-    console.log(array);
     storeProj(array);
-    console.log(id);
 };
 
 
-const createProject = (title, description, dueDate, priority) => {
+const createProject = (array) => {
     
+    let title=array[0];
+    let description=array[1];
+    let dueDate=array[2];
+    let priority=array[3];
+    let id=array[4];
+    let todosList=array[5];
+    let status=array[6];
     
 
     
     let newProject = projectFactory(title, description, dueDate, priority, todosList, status, id);
-    
+   
     projectsArray.push(newProject);
+    console.log(projectsArray);
     //storeProjArray();
     //testProjects();
 };
@@ -82,7 +88,7 @@ const initialProject =() => {
     
     if (projCounter===0){
         
-        createProjectArray("General view", "This is a list of all your tasks", "N/A", "Normal");
+        createProjectArray("See all tasks", "This is a list of all your tasks", "N/A", "Normal");
         
     };
     

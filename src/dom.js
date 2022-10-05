@@ -1,6 +1,6 @@
 import {format, formatDistance} from 'date-fns';
-import { el } from 'date-fns/locale';
-import { createProjectArray, projectsArray, retrieveProjArray, createProject, createTodo} from "./internal";
+import { createProjectArray, projectsArray, createProject, createTodo} from "./internal";
+import { projCounter,retrieveProj } from './storage';
 
 let newProjectButton = document.getElementById("new-project");
 let newTodoButton = document.getElementById("new-todo");
@@ -133,28 +133,30 @@ const createTodoButton = () => {
 }
 
 const projectListDisplay = () => {
-    //alert("!");
+    
     let listContainer = document.getElementById("project-list-container");
-    //retrieveProjArray();
-    projectsArray.forEach(el => {
+    deleteAllChildEl(listContainer);
+    for (let i=1; i>=projCounter; i++) {
         
-        if (el.id>1 && el.displayed!==true) {
-            el.displayed = true;
-            let name = el.title;
-            let entry = document.createElement("div");
-            entry.textContent = name;
-            entry.setAttribute("class", "project-entry");
-            entry.addEventListener("click", ()=> { displayProjectDetails(el.id)})
-            listContainer.appendChild(entry);
+        let tempArr = retrieveProj(i);
+        createProject(tempArr);
+        let loc = i-1;
+
+        let name = tempArr[0];
+        
+        let entry = document.createElement("div");
+        entry.textContent = name;
+        entry.setAttribute("class", "project-entry");
+        entry.addEventListener("click", ()=> { displayProjectDetails(i)})
+        listContainer.appendChild(entry);
         };
-    });
-}
+    };
 
 const displayProjectDetails = (id) => {
     let projectsContainer = document.getElementById("proj-view");
     deleteAllChildEl(projectsContainer);
-    //retrieveProjArray();
-    for (let i=1; i<=projectsArray.length;i++) {
+        
+       for (let i=1; i<=projectsArray.length;i++) {
 
    
         if (projectsArray[i].id===id) {
@@ -195,7 +197,7 @@ const displayProjectDetails = (id) => {
 
 
 const domHandler = () => {
-    
+    projectListDisplay();
     displayLabel();
     displayProjectForm();
     displayTodoForm();

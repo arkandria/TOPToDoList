@@ -9,7 +9,7 @@ const testStorage= () => {
         projCounter = 0;
     } else {
         let see = window.localStorage.getItem('projCounter')
-        projCounter=see;
+        projCounter = see;
     };
     const testTaskCount = (localStorage.getItem('taskCounter') == null);
 
@@ -22,8 +22,16 @@ const testStorage= () => {
     };
 };
 
-
-
+const testProj= (id) => {
+    let name = "proj"+id
+    let answer = (localStorage.getItem(name) !== null);
+    return answer
+};
+const testTask= (id) => {
+    let name = "task"+id
+    let answer = (localStorage.getItem(name) !== null);
+    return answer
+};
 
 const storeProj= (array) => {
     let pId = "proj"+array[4];
@@ -40,10 +48,10 @@ const storeTask= (array) => {
 }
 
 
-const retrieveProj= (id) => {
-    let name = "proj"+id;
-    console.log(name);
-    return JSON.parse(window.localStorage.getItem(name));
+const retrieveProj = (i) => {
+    let name = "proj"+i;
+    let x = JSON.parse(window.localStorage.getItem(name));
+    return x;
     }
 
 const retrieveTask= (id) => {
@@ -62,4 +70,6 @@ export {
     storeProj,
     storeTask,
     projCounter,
+    testProj,
+    testTask
 };
